@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   bpf_u_int32 net, mask;
   char *dev;
 
-  // Step 1: 인터페이스 설정 (명령줄 인자 또는 자동 감지)
+  //인터페이스 설정 (명령줄 인자 또는 자동 감지)
   if (argc == 2) {
       dev = argv[1];  // 사용자가 인터페이스 입력했을 경우
   } else {
@@ -77,21 +77,21 @@ int main(int argc, char *argv[])
   }
   printf("Using device: %s\n", dev);
 
-  // Step 2: 네트워크 주소 및 마스크 가져오기
+  //네트워크 주소 및 마스크 가져오기
   if (pcap_lookupnet(dev, &net, &mask, errbuf) == -1) {
       fprintf(stderr, "Couldn't get netmask for device %s: %s\n", dev, errbuf);
       net = 0;
       mask = 0;
   }
 
-  // Step 3: 패킷 캡처 핸들 열기
+  //패킷 캡처 핸들 열기
   handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
   if (handle == NULL) {
       fprintf(stderr, "Couldn't open device %s: %s\n", dev, errbuf);
       return EXIT_FAILURE;
   }
 
-  // Step 4: 필터 설정 (ICMP 패킷만 캡처)
+  //필터 설정 (ICMP 패킷만 캡처)
   if (pcap_compile(handle, &fp, filter_exp, 0, net) == -1) {
       fprintf(stderr, "Couldn't parse filter %s: %s\n", filter_exp, pcap_geterr(handle));
       return EXIT_FAILURE;
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 
   printf("Capturing ICMP packets on %s...\n", dev);
 
-  // Step 5: 패킷 캡처 시작
+  //패킷 캡처 시작
   pcap_loop(handle, -1, got_packet, NULL);
 
   pcap_close(handle);   // Close the handle
