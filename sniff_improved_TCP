@@ -71,7 +71,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
             printf("   Src Port: %d\n", ntohs(tcp->tcp_sport));
             printf("   Dst Port: %d\n", ntohs(tcp->tcp_dport));
 
-            // 메시지 출력 (적당한 길이, 최대 32바이트)
+            // 메시지 출력 (최대 32바이트로)
             int ip_header_len = ip->iph_ihl * 4;
             int tcp_header_len = TH_OFF(tcp) * 4;
             int payload_offset = sizeof(struct ethheader) + ip_header_len + tcp_header_len;
