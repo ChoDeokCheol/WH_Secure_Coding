@@ -119,5 +119,5 @@ int main() {
     pcap_loop(handle, -1, got_packet, NULL);
 
     pcap_close(handle);
-    return EXIT_SUCCESS;
+    return 0;
 }
