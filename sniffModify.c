@@ -107,5 +107,5 @@ int main(int argc, char *argv[])
   pcap_loop(handle, -1, got_packet, NULL);
 
   pcap_close(handle);   // Close the handle
-  return EXIT_SUCCESS;
+  return 0;
 }
